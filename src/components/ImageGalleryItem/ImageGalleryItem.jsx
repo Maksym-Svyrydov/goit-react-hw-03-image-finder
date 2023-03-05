@@ -1,4 +1,5 @@
 import { Item, Img } from '../ImageGalleryItem/ImageGalleryItem.styled';
+import PropTypes from 'prop-types';
 
 export const ImageItem = ({ webformatURL, largeImageURL, openModal }) => {
   return (
@@ -6,4 +7,10 @@ export const ImageItem = ({ webformatURL, largeImageURL, openModal }) => {
       <Img src={webformatURL} alt="" onClick={() => openModal(largeImageURL)} />
     </Item>
   );
+};
+
+ImageItem.propTypes = {
+  webformatURL: PropTypes.string.isRequired,
+  largeImageURL: PropTypes.string.isRequired,
+  openModal: PropTypes.func.isRequired,
 };

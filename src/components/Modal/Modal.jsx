@@ -1,11 +1,11 @@
+import PropTypes from 'prop-types';
 import { createPortal } from 'react-dom';
 import { Component } from 'react';
 import { Overlay, ModalWindow, Button, Img } from '../Modal/Modal.styled';
-import { Loader } from '../Loader/Loader';
+// import { Loader } from '../Loader/Loader';
 const modalRoot = document.querySelector('#modal-root');
 
 export class Modal extends Component {
-  state = {};
   closeEsc = e => {
     if (e.code === 'Escape') {
       this.props.closeModal();
@@ -18,23 +18,27 @@ export class Modal extends Component {
     window.removeEventListener('keydown', this.closeEsc);
   };
   render() {
+    const { closeModal, modalImage } = this.props;
     return createPortal(
       <Overlay
         onClick={e => {
           if (e.target === e.currentTarget) {
-            this.props.closeModal();
+            closeModal();
           }
         }}
       >
         <ModalWindow>
-          {this.state.modalOpen && <Loader />}
-          <Img src={this.props.modalImage} alt="" />
-          <Button type="button" onClick={() => this.props.closeModal()}>
+          <Button type="button" onClick={() => closeModal()}>
             X
           </Button>
+          <Img src={modalImage} alt="" />
         </ModalWindow>
       </Overlay>,
       modalRoot
     );
   }
 }
+Modal.propTypes = {
+  closeModal: PropTypes.func.isRequired,
+  modalImage: PropTypes.string.isRequired,
+};

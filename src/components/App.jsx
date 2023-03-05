@@ -60,19 +60,16 @@ export class App extends Component {
   };
 
   render() {
+    const { handleFormSubmit, toggleModal, handleLoadMore } = this;
+    const { isLoading, images, totalHits, showModal, modalImage } = this.state;
     return (
       <Conatiner>
-        <SearchBar onSubmit={this.handleFormSubmit} />
-        {this.state.isLoading && <Loader />}
-        <ImageGallery images={this.state.images} openModal={this.toggleModal} />
-        {!!this.state.totalHits && (
-          <LoadMore onLoadMore={this.handleLoadMore} />
-        )}
-        {this.state.showModal && (
-          <Modal
-            closeModal={this.toggleModal}
-            modalImage={this.state.modalImage}
-          />
+        <SearchBar onSubmit={handleFormSubmit} />
+        {isLoading && <Loader />}
+        <ImageGallery images={images} openModal={toggleModal} />
+        {!!totalHits && <LoadMore onLoadMore={handleLoadMore} />}
+        {showModal && (
+          <Modal closeModal={toggleModal} modalImage={modalImage} />
         )}
 
         <ToastContainer autoClose={2500} />

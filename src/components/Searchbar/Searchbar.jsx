@@ -1,4 +1,5 @@
 // import PropTypes from 'prop-types';
+import { FaSearch } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import { Component } from 'react';
 import {
@@ -8,7 +9,7 @@ import {
   Label,
   Input,
 } from '../Searchbar/Searchbar.styled';
-
+import PropTypes from 'prop-types';
 import 'react-toastify/dist/ReactToastify.css';
 //
 //
@@ -29,10 +30,13 @@ export class SearchBar extends Component {
     this.setState({ search: '' });
   };
   render() {
+    const { handleSubmit, handleInputChange } = this;
+    const { search } = this.state;
     return (
       <Header>
-        <Form onSubmit={this.handleSubmit}>
+        <Form onSubmit={handleSubmit}>
           <Button type="submit">
+            <FaSearch />
             <Label>Search</Label>
           </Button>
 
@@ -41,8 +45,8 @@ export class SearchBar extends Component {
             autoComplete="off"
             autoFocus
             placeholder="Search images and photos"
-            value={this.state.search}
-            onChange={this.handleInputChange}
+            value={search}
+            onChange={handleInputChange}
           />
         </Form>
       </Header>
@@ -51,3 +55,6 @@ export class SearchBar extends Component {
 }
 
 export default SearchBar;
+SearchBar.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+};
