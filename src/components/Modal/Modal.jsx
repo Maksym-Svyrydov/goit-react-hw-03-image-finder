@@ -27,10 +27,11 @@ export class Modal extends Component {
           }
         }}
       >
+        {' '}
+        <Button type="button" onClick={() => closeModal()}>
+          X
+        </Button>
         <ModalWindow>
-          <Button type="button" onClick={() => closeModal()}>
-            X
-          </Button>
           <Img src={modalImage} alt="" />
         </ModalWindow>
       </Overlay>,

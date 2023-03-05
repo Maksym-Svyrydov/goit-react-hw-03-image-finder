@@ -26,7 +26,7 @@ export const Button = styled.button`
   position: absolute;
   top: 0;
   right: 0;
-  margin: 5px 5px;
+  margin: 15px 50px;
   padding: 5px 12px;
   border-radius: 100%;
   background-color: #3f51b5;
