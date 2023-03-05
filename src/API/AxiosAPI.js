@@ -7,7 +7,7 @@ const PAGE = '12';
 
 export const fetchGallery = async (query, page) => {
   const { data } = await axios.get(
-    `?q=${query}&page=${PAGE}&key=${API_KEY}&image_type=photo&orientation=horizontal&per_page=${PAGE}`
+    `?q=${query}&page=${page}&key=${API_KEY}&image_type=photo&orientation=horizontal&per_page=${PAGE}`
   );
   return data;
 };

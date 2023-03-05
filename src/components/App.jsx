@@ -6,6 +6,8 @@ import { ImageGallery } from '../components/ImageGallery/ImageGallery';
 // import { ImageItem } from '../components/ImageGalleryItem/ImageGalleryItem';
 import { Modal } from '../components/Modal/Modal';
 import { Conatiner } from './App.styled';
+import { Loader } from '../components/Loader/Loader';
+import { LoadMore } from '../components/ButtonLoadMore/Button';
 // import Image from './ImageGalleryItem';
 export class App extends Component {
   state = {
@@ -16,9 +18,14 @@ export class App extends Component {
     largeImageURL: '',
     modalImage: '',
     showModal: false,
+    totalHits: 0,
   };
   componentDidUpdate = (_, prevState) => {
-    if (this.state.query !== prevState.query) {
+    if (
+      this.state.query !== prevState.query ||
+      this.state.page !== prevState.page
+    ) {
+      this.setState({ isLoading: true });
       fetchGallery(this.state.query, this.state.page)
         .then(data => {
           this.setState(prevState => ({
@@ -38,7 +45,7 @@ export class App extends Component {
     }
   };
   handleFormSubmit = query => {
-    this.setState({ query });
+    this.setState({ query, page: 1 });
   };
   toggleModal = modalImage => {
     if (!modalImage) {
@@ -47,18 +54,28 @@ export class App extends Component {
     }
     this.setState({ modalImage, showModal: true });
   };
+  handleLoadMore = () => {
+    this.setState(state => ({ page: state.page + 1 }));
+    console.log(this.state.page);
+  };
+
   render() {
     return (
       <Conatiner>
-        <ToastContainer autoClose={2500} />
         <SearchBar onSubmit={this.handleFormSubmit} />
+        {this.state.isLoading && <Loader />}
         <ImageGallery images={this.state.images} openModal={this.toggleModal} />
+        {!!this.state.totalHits && (
+          <LoadMore onLoadMore={this.handleLoadMore} />
+        )}
         {this.state.showModal && (
           <Modal
             closeModal={this.toggleModal}
             modalImage={this.state.modalImage}
           />
         )}
+
+        <ToastContainer autoClose={2500} />
       </Conatiner>
     );
   }
